@@ -41,6 +41,8 @@ dependencies {
     implementation 'com.google.api-client:google-api-client:1.23.0'
     implementation 'com.google.http-client:google-http-client-android:1.23.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.1'
+    implementation project(path: ':jokesLib')
+    implementation project(path: ':jokeactivity')
 
     // Implementations due for a warning about different library versions
     // solutions found on Stack Overflow - http://bit.ly/2HvNHcz
@@ -54,3 +56,5 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 }
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
