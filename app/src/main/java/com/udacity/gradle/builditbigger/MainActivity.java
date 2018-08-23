@@ -45,13 +45,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Jokes myJokes = new Jokes();
-        String joke = myJokes.getJoke();
-        Toast.makeText(this, joke, Toast.LENGTH_SHORT).show();
+        JokeAsyncTask.OnJokeLoaded callback = new JokeAsyncTask.OnJokeLoaded() {
+            @Override
+            public void success(String result) {
+                Intent myIntent = new Intent(MainActivity.this, JokeActivity.class);
+                myIntent.putExtra(JOKE_KEY_EXTRA, result);
+                Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
+                startActivity(myIntent);
+            }
+        };
+        //Jokes myJokes = new Jokes();
+        //String joke = myJokes.getJoke();
+        //Toast.makeText(this, joke, Toast.LENGTH_SHORT).show();
+        new JokeAsyncTask(callback).execute();
 
-        Intent myIntent = new Intent(this, JokeActivity.class);
-        myIntent.putExtra(JOKE_KEY_EXTRA, joke);
-        startActivity(myIntent);
+
     }
 
 
