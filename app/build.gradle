@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "com.udacity.gradle.builditbigger"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -29,6 +29,30 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "type"
+
+    productFlavors {
+        free {
+            applicationId 'com.udacity.gradle.builditbigger.free'
+            versionName "1.0­free"
+            dimension "type"
+        }
+        paid {
+            applicationId 'com.udacity.gradle.builditbigger.paid'
+            versionName "1.0­paid"
+            dimension "type"
+        }
+    }
+
+    sourceSets {
+        free {
+            manifest.srcFile 'src/free/AndroidManifest.xml'
+        }
+        paid {
+            manifest.srcFile 'src/paid/AndroidManifest.xml'
         }
     }
 }
@@ -55,6 +79,11 @@ dependencies {
     })
 
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support:support-annotations:27.1.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+
+    freeImplementation 'com.google.android.gms:play-services-ads:15.0.1'
 }
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
