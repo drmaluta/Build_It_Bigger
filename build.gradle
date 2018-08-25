@@ -21,6 +21,32 @@ allprojects {
     }
 }
 
-task runTestsAgainstBackend(type: GradleBuild){
-    tasks = ["appengineStart", "connectedCheck", "appengineStop"]
+task startAppEngine (dependsOn: ":backend:appengineStart") {
+    doLast {
+        println "App Engine started"
+    }
 }
+
+task runAndroidTest (dependsOn: ":app:connectedCheck") {
+    doLast {
+        println "Running tests"
+    }
+}
+
+task stopAppEngine (dependsOn: ":backend:appengineStop") {
+    doLast {
+        println "App Engine stopped"
+    }
+}
+
+task runTestsAgainstBackend(dependsOn: "startAppEngine"){
+    dependsOn "runAndroidTest"
+    mustRunAfter "startAppEngine"
+    doLast {
+        println "Cycle completed"
+    }
+    finalizedBy "stopAppEngine"
+}
+
+runAndroidTest.mustRunAfter "startAppEngine"
+runAndroidTest.finalizedBy "stopAppEngine"

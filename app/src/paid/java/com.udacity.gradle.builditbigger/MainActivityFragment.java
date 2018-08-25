@@ -42,15 +42,16 @@ public class MainActivityFragment extends Fragment {
     }
 
     public void tellJoke() {
-        JokeAsyncTask.OnJokeLoaded callback = new JokeAsyncTask.OnJokeLoaded() {
+        JokeAsyncTask task = new JokeAsyncTask();
+        task.setListener(new JokeAsyncTask.OnJokeLoaded() {
             @Override
             public void success(String result) {
                 Intent myIntent = new Intent(getContext(), JokeActivity.class);
                 myIntent.putExtra(JOKE_KEY_EXTRA, result);
-                startActivity(myIntent);
                 progressBar.setVisibility(View.GONE);
+                startActivity(myIntent);
             }
-        };
-        new JokeAsyncTask(callback).execute();
+        }).execute();
+
     }
 }

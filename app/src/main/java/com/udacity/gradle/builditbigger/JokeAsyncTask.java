@@ -18,14 +18,20 @@ public class JokeAsyncTask extends AsyncTask<Void, Void, String> {
 
     private static MyApi myApi = null;
     private OnJokeLoaded mCallback;
+    public static String AsyncError = "Error Getting Joke";
     private static final String LOCALHOST_IP_ADDRESS = "http://10.0.2.2:8080/_ah/api/";
 
     public interface OnJokeLoaded {
         void success(String result);
     }
 
-    JokeAsyncTask(OnJokeLoaded callback) {
+    JokeAsyncTask() {
+
+    }
+
+    public JokeAsyncTask setListener (OnJokeLoaded callback){
         mCallback = callback;
+        return this;
     }
 
     @Override
@@ -37,7 +43,8 @@ public class JokeAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             return myApi.loadJoke().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            e.printStackTrace();
+            return AsyncError;
         }
     }
 
